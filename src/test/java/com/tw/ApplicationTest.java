@@ -44,7 +44,7 @@ public class ApplicationTest {
         InputHandle mock = mock(InputHandle.class);
         when(mock.ask("1. 添加学生\n2. 生成成绩单\n3. 退出请输入你的选择（1～3）：\n")).thenReturn("1").thenReturn("3");
         when(mock.ask("请输入学生信息（格式：姓名, 学号, 学科: 成绩, ...），按回车提交：\n")).thenReturn("张三");
-        when(mock.ask("请按正确的格式输入（格式：姓名, 学号, 学科: 成绩, ...）：\n")).thenReturn("数学: 75, 语文: 95, 英语: 80, 编程: 80");
+        when(mock.ask("请按正确的格式输入（格式：姓名, 学号, 学科: 成绩, ...）：\n")).thenReturn("张三, 1, 数学: 75, 语文: 95, 英语: 80, 编程: 80");
 
         (new StudentGrade()).shell(mock);
 
@@ -53,4 +53,16 @@ public class ApplicationTest {
         verify(mock).ask("请按正确的格式输入（格式：姓名, 学号, 学科: 成绩, ...）：\n");
     }
 
+    @Test
+    public void Scenario5() throws Exception {
+        InputHandle mock = mock(InputHandle.class);
+        when(mock.ask("1. 添加学生\n2. 生成成绩单\n3. 退出请输入你的选择（1～3）：\n")).thenReturn("1").thenReturn("3");
+        when(mock.ask("请输入学生信息（格式：姓名, 学号, 学科: 成绩, ...），按回车提交：\n")).thenReturn("张三, 1, 数学: 75, 语文: 95, 英语: 80, 编程: 80");
+
+        (new StudentGrade()).shell(mock);
+
+        verify(mock, times(2)).ask("1. 添加学生\n2. 生成成绩单\n3. 退出请输入你的选择（1～3）：\n");
+        verify(mock).ask("请输入学生信息（格式：姓名, 学号, 学科: 成绩, ...），按回车提交：\n");
+        verify(mock).println("学生张三的成绩被添加");
+    }
 }

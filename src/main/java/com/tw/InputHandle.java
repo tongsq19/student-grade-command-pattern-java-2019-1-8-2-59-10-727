@@ -17,4 +17,8 @@ public class InputHandle {
         out.println(message);
         return scanner.nextLine();
     }
+
+    public void println(String message) {
+        out.println(message);
+    }
 }
