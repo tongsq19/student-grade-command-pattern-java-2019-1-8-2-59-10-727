@@ -1,5 +1,39 @@
 # 学生成绩单（命令行模式版）
 
+## 使用方法
+
+A 运行程序
+
+1. 使用 git clone 克隆项目到本地/或者下载压缩包到本地
+2. 打开 IntelliJ IDEA ，选择 import 或者 open 项目目录，而默认配置导入，
+3. 菜单栏：点击 Run -> Run ..., 配置 Run/Debug configuration 面板：
+   1. 点击 “+” 选择 Application 
+   2. Name: `Unnamed` 换成 `Application`
+   3. Main Class: 填入 `com.tw.Application`
+   4. Working directory: 填入 `$MODULE_WORKING_DIR$`
+   5. Use classpath of module: <no module> 换成 `student-grade-command-pattern-2019-1-8-2-59-10-727-master.main`
+   6. 点击 Apply -> 点击 Run
+
+![](https://ws2.sinaimg.cn/large/006tKfTcly1g0z7bynh0xj30t30iawgu.jpg)
+
+B 运行测试
+
+在项目目录下，打开终端并运行
+
+```
+$ ./gradlew test
+```
+
+出现 BUILD SUCCESSFUL 
+
+## 运行效果
+
+![](https://ws3.sinaimg.cn/large/006tKfTcly1g0z7bplrb0j30uz0a0gmr.jpg)
+
+
+------
+
+
 ## 练习要求
 
 我们现在做一个应用，该应用是一个命令行应用。当程序启动的时候，我们会看到一个命令行的主界面：
