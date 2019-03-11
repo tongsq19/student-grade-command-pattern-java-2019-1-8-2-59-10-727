@@ -22,4 +22,22 @@ public class Student {
     public String getName() {
         return name;
     }
+
+    public int getId() { return id; }
+
+    public int getMath() { return math;}
+
+    public int getChinese() { return chinese; }
+
+    public int getEnglish() { return english; }
+
+    public int getComputer() { return computer; }
+
+    public double getAver() {
+        return getTotal()/4.;
+    }
+
+    public int getTotal() {
+        return (math + chinese + english + computer);
+    }
 }
