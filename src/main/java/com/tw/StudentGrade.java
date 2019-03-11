@@ -16,13 +16,17 @@ public class StudentGrade {
             if (answer.equals("1")) {
                 addStudentInfo(console);
             } else if(answer.equals("2")) {
-                answer = console.ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
-                continue;
+                printStudentGrade(console);
             }
             answer = console.ask("1. 添加学生\n2. 生成成绩单\n3. 退出请输入你的选择（1～3）：\n");
         }
 
         System.out.println("Bye!");
+    }
+
+    private void printStudentGrade(InputHandle console) {
+        String answer;
+        answer = console.ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
     }
 
     private void addStudentInfo(InputHandle console) {
@@ -63,10 +67,6 @@ public class StudentGrade {
                 }
             }
         }
-    }
-
-    private boolean isaBoolean(String answer) {
-        return !answer.contains(",");
     }
 
     private boolean isFormatValid(String answer) {
