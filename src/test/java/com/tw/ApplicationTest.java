@@ -26,4 +26,17 @@ public class ApplicationTest {
         verify(mock).ask("请输入学生信息（格式：姓名, 学号, 学科: 成绩, ...），按回车提交：\n");
     }
 
+    @Test
+    public void Scneario3() throws Exception {
+        InputHandle mock = mock(InputHandle.class);
+        when(mock.ask("1. 添加学生\n2. 生成成绩单\n3. 退出请输入你的选择（1～3）：\n")).thenReturn("2");
+        when(mock.ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n")).thenReturn("3");
+
+        StudentGrade.shell(mock);
+
+        verify(mock).ask("1. 添加学生\n2. 生成成绩单\n3. 退出请输入你的选择（1～3）：\n");
+        verify(mock).ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
+    }
+
+
 }
