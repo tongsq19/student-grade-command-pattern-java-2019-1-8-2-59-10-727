@@ -92,4 +92,17 @@ public class ApplicationTest {
 
         verify(mock).ask("请按正确的格式输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
     }
+
+    @Test
+    public void Scenario8() throws Exception {
+        //生成单个学生成绩，格式正确，学号正确
+        InputHandle mock = mock(InputHandle.class);
+        when(mock.ask("1. 添加学生\n2. 生成成绩单\n3. 退出请输入你的选择（1～3）：\n")).thenReturn("1").thenReturn("2").thenReturn("3");
+        when(mock.ask("请输入学生信息（格式：姓名, 学号, 学科: 成绩, ...），按回车提交：\n")).thenReturn("张三, 1, 语文: 95, 数学: 75, 英语: 80, 编程: 80");
+        when(mock.ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n")).thenReturn("2");
+
+        (new StudentGrade()).shell(mock);
+
+        verify(mock).println("成绩单\n姓名|数学|语文|英语|编程|平均分|总分\n========================\n张三|75|95|80|80|82.5|330========================\n全班总分平均数：82.5\n全班总分中位数：330\n");
+    }
 }
