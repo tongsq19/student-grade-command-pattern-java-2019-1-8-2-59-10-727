@@ -5,7 +5,7 @@
 A 运行程序
 
 1. 使用 git clone 克隆项目到本地/或者下载压缩包到本地
-2. 打开 IntelliJ IDEA ，选择 import 或者 open 项目目录，而默认配置导入，
+2. 打开 IntelliJ IDEA ，选择 import 或者 open 项目目录，Gradle 会自动导入依赖
 3. 菜单栏：点击 Run -> Run ..., 配置 Run/Debug configuration 面板：
    1. 点击 “+” 选择 Application 
    2. Name: `Unnamed` 换成 `Application`
