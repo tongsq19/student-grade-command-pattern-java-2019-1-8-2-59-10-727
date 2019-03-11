@@ -24,19 +24,27 @@ public class StudentGrade {
 
     private void printStudentGrade(InputHandle console) {
         String answer = console.ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
-        while(isListInvalid(answer)) {
-            answer = console.ask("请按正确的格式输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
-        }
 
+        while(true) {
+            try {
+                toPrintStudentGrade(console, answer);
+                break;
+            } catch (Exception e) {
+                answer = console.ask("请按正确的格式输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
+            }
+        }
+    }
+
+    private void toPrintStudentGrade(InputHandle console, String answer) {
         StringBuilder transcript = new StringBuilder("成绩单\n姓名|数学|语文|英语|编程|平均分|总分\n========================\n");
 
         for(String idStr :answer.split(",") ) {
             int id = Integer.parseInt(idStr.trim());
             for (Student s: students) {
                 if (s.getId() == id) {
-                    transcript.append(s.getName()).append("|").append(s.getMath()).append("|").append(s.getChinese()).append("|")
-                            .append(s.getEnglish()).append("|").append(s.getComputer()).append("|").append(s.getAver())
-                            .append("|").append(s.getTotal()).append("\n");
+                    transcript.append(s.getName()).append("|").append(s.getMath()).append("|").append(s.getChinese())
+                            .append("|").append(s.getEnglish()).append("|").append(s.getComputer()).append("|")
+                            .append(s.getAver()).append("|").append(s.getTotal()).append("\n");
                 }
             }
         }
@@ -74,28 +82,34 @@ public class StudentGrade {
         console.println(transcript.toString());
     }
 
-    private boolean isListInvalid(String answer) {
-        if(!answer.matches("[0-9,\\s]+")) return true;
-        return false;
-    }
-
 
     private void addStudentInfo(InputHandle console) {
         String answer;
         answer = console.ask("请输入学生信息（格式：姓名, 学号, 学科: 成绩, ...），按回车提交：\n");
-         while (!isFormatInvalid(answer)) {
-            answer = console.ask("请按正确的格式输入（格式：姓名, 学号, 学科: 成绩, ...）：\n");
+
+        while(true) {
+            try {
+                toAddStudentInfo(console, answer);
+                break;
+            } catch(Exception e){
+                answer = console.ask("请按正确的格式输入（格式：姓名, 学号, 学科: 成绩, ...）：\n");
+            }
         }
+    }
 
+    private void toAddStudentInfo(InputHandle console, String answer) {
         String name = answer.split(",")[0].trim();
-        int id = Integer.parseInt(answer.split(",")[1].trim());
 
+        int id = Integer.parseInt(answer.split(",")[1].trim());
         Map<String, Integer> grade = new HashMap<String, Integer>();
         praseGrade(answer, grade);
 
         Student student = new Student(name, id, grade);
+
         students.add(student);
-        console.println("学生"+ student.getName() + "的成绩被添加");
+
+        console.println("学生" + student.getName() + "的成绩被添加");
+
         System.out.println("");
     }
 
@@ -121,14 +135,4 @@ public class StudentGrade {
         }
     }
 
-    private boolean isFormatInvalid(String answer) {
-        if(!answer.contains(",")) return false;
-        if(!answer.contains(":")) return false;
-        if(!answer.contains("数学")) return false;
-        if(!answer.contains("语文")) return false;
-        if(!answer.contains("英语")) return false;
-        if(!answer.contains("编程")) return false;
-
-        return true;
-    }
 }
