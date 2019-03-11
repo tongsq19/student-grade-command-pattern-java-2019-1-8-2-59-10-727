@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class InputHandle {
     private final Scanner scanner;
-    private final PrintStream out;
+    public final PrintStream out;
 
     public InputHandle(InputStream in, PrintStream out) {
         scanner = new Scanner(in);
@@ -15,6 +15,6 @@ public class InputHandle {
 
     public String ask(String message) {
         out.println(message);
-        return scanner.next();
+        return scanner.nextLine();
     }
 }
