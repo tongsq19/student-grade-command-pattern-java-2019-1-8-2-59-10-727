@@ -24,38 +24,47 @@ public class StudentGrade {
 
     private void printStudentGrade(InputHandle console) {
         String answer = console.ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
-        while(isListNotValid(answer)) {
+        while(isListInvalid(answer)) {
             answer = console.ask("请按正确的格式输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
         }
-        int id = Integer.parseInt(answer);
 
         StringBuilder transcript = new StringBuilder("成绩单\n姓名|数学|语文|英语|编程|平均分|总分\n========================\n");
 
-        double classAverage = 0;
-        double classMedian = 0;
-
-        if(students.size() > 0) {
-            int sum  = 0;
-            List<Integer> classGrades = new ArrayList<Integer>();
-
+        for(String idStr :answer.split(",") ) {
+            int id = Integer.parseInt(idStr.trim());
             for (Student s: students) {
                 if (s.getId() == id) {
                     transcript.append(s.getName()).append("|").append(s.getMath()).append("|").append(s.getChinese()).append("|")
                             .append(s.getEnglish()).append("|").append(s.getComputer()).append("|").append(s.getAver())
                             .append("|").append(s.getTotal()).append("\n");
                 }
-                sum += s.getTotal();
+            }
+        }
+
+        double classAverage = 0;
+        double classMedian = 0;
+
+        int number = students.size();
+
+        if(number > 0) {
+            List<Integer> classGrades = new ArrayList<Integer>();
+
+            int sum  = 0;
+            for (Student s: students) {
                 classGrades.add(s.getTotal());
+                sum += s.getTotal();
             }
 
-            classAverage = (double)sum/students.size();
-            Integer[] classGradeArray = classGrades.toArray(new Integer[students.size()]);
-            Arrays.sort(classGradeArray);
-            if (students.size() % 2 == 0) {
-                classMedian = classGradeArray[students.size()/2-1] + classGradeArray[students.size()/2];
+            Integer[] gradeArray = classGrades.toArray(new Integer[number]);
+            Arrays.sort(gradeArray);
+
+            if (number % 2 == 0) {
+                classMedian = 0.5*(gradeArray[number /2-1] + gradeArray[number /2]);
             } else {
-                classMedian = classGradeArray[students.size()/2];
+                classMedian = gradeArray[number /2];
             }
+
+            classAverage = (double)sum/ number;
         }
 
         DecimalFormat df = new DecimalFormat("###.#");
@@ -65,8 +74,8 @@ public class StudentGrade {
         console.println(transcript.toString());
     }
 
-    private boolean isListNotValid(String answer) {
-        if(!answer.matches("[0-9]+")) return true;
+    private boolean isListInvalid(String answer) {
+        if(!answer.matches("[0-9,\\s]+")) return true;
         return false;
     }
 
@@ -74,7 +83,7 @@ public class StudentGrade {
     private void addStudentInfo(InputHandle console) {
         String answer;
         answer = console.ask("请输入学生信息（格式：姓名, 学号, 学科: 成绩, ...），按回车提交：\n");
-         while (!isFormatNotValid(answer)) {
+         while (!isFormatInvalid(answer)) {
             answer = console.ask("请按正确的格式输入（格式：姓名, 学号, 学科: 成绩, ...）：\n");
         }
 
@@ -112,7 +121,7 @@ public class StudentGrade {
         }
     }
 
-    private boolean isFormatNotValid(String answer) {
+    private boolean isFormatInvalid(String answer) {
         if(!answer.contains(",")) return false;
         if(!answer.contains(":")) return false;
         if(!answer.contains("数学")) return false;
