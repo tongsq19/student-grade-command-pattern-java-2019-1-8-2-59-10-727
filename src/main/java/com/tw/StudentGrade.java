@@ -25,14 +25,22 @@ public class StudentGrade {
     }
 
     private void printStudentGrade(InputHandle console) {
-        String answer;
-        answer = console.ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
+        String answer = console.ask("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
+        while(isListNotValid(answer)) {
+            answer = console.ask("请按正确的格式输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：\n");
+        }
     }
+
+    private boolean isListNotValid(String answer) {
+        if(!answer.matches("[0-9]+")) return true;
+        return false;
+    }
+
 
     private void addStudentInfo(InputHandle console) {
         String answer;
         answer = console.ask("请输入学生信息（格式：姓名, 学号, 学科: 成绩, ...），按回车提交：\n");
-         while (!isFormatValid(answer)) {
+         while (!isFormatNotValid(answer)) {
             answer = console.ask("请按正确的格式输入（格式：姓名, 学号, 学科: 成绩, ...）：\n");
         }
 
@@ -69,7 +77,7 @@ public class StudentGrade {
         }
     }
 
-    private boolean isFormatValid(String answer) {
+    private boolean isFormatNotValid(String answer) {
         if(!answer.contains(",")) return false;
         if(!answer.contains(":")) return false;
         if(!answer.contains("数学")) return false;
